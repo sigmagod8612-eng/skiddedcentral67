@@ -1,0 +1,240 @@
+local whitelist = {
+    [9017881223] = true,    
+    [9676840962] = true,
+
+}
+
+local player = game.Players.LocalPlayer
+
+if not whitelist[player.UserId] then
+    game:GetService("Players").LocalPlayer:Kick("Not Whitelisted to use TripleT HUB mobile version")
+else
+    print("Your Whitelisted to use TripleT Hub mobile version")
+  
+end
+
+
+local WindUI
+local ok, result = pcall(function()
+    return require("./src/Init")
+end)
+
+if ok then
+    WindUI = result
+else
+    WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/DesireGoated/WindUI/main/dist/main.lua"))()
+end
+
+local Window = WindUI:CreateWindow({
+    Title = "TripleT.Hub | Mobile Version",
+    Author = "by Desire",
+    Folder = "prisonlifehub",
+    Icon = "rbxassetid://107368903747806",
+    IconSize = 44,
+    NewElements = true,
+    HideSearchBar = false,
+    OpenButton = {
+        Title = "Open UI",
+        CornerRadius = UDim.new(1,0),
+        StrokeThickness = 3,
+        Enabled = true,
+        Draggable = true,
+        OnlyMobile = false,
+        Color = ColorSequence.new(Color3.fromHex("#FF69B4"), Color3.fromHex("#FF69B4"))
+    }
+})
+
+local KillMethodsTab = Window:Tab({
+    Title = "Kill Methods",
+    Icon = "sparkles"
+})
+
+-- Kill All Feature (Button)
+KillMethodsTab:Button({
+    Title = "Kill All",
+    Callback = function()
+        task.spawn(function()
+            while true do
+                for i, target in pairs(game.Players:GetPlayers()) do
+                    if target ~= game.Players.LocalPlayer and target.Character and target.Character:FindFirstChild("Humanoid") then
+                        local player = game.Players.LocalPlayer
+                        local tool = player.Character:FindFirstChildOfClass("Tool") or player.Backpack:FindFirstChildOfClass("Tool")
+                        if not tool then continue end
+                        local toolPart = tool:FindFirstChildWhichIsA("BasePart")
+                        if not toolPart then continue end
+
+                        local rootPart = target.Character:FindFirstChild("HumanoidRootPart")
+                        if not rootPart then continue end
+
+                        local args = {
+                            toolPart,
+                            player,
+                            target.Character.Humanoid,
+                            target.Character.Humanoid,
+                            100,
+                            {0, 0, false, false, 100, 100},
+                            {false, 0, 3},
+                            rootPart,
+                            {false, {245631555, 245030056, 245631167}, 0, 10, nil},
+                            Vector3.new(-451.23, 4.08, -424.57),
+                            Vector3.new(0.731, -0.457, 0.507),
+                            1760303386.61,
+                            Vector3.new(1.558, 1.978, 1.149)
+                        }
+
+                        pcall(function()
+                            game.ReplicatedStorage:FindFirstChild("InflictTarget", true):InvokeServer(unpack(args))
+                        end)
+                    end
+                end
+                task.wait(0.1)
+            end
+        end)
+    end
+})
+
+-- Kill All V2 Feature (Button)
+KillMethodsTab:Button({
+    Title = "Kill All V2",
+    Callback = function()
+        while task.wait(1) do
+            for i,v in pairs(game.Players:GetChildren()) do 
+                if v.Name == game.Players.LocalPlayer.Name then continue end
+                if v.Character == nil then continue end
+
+                local args = {
+                game:GetService("Players").LocalPlayer.Backpack:FindFirstChildOfClass("Tool"),
+                game:GetService("Players"):WaitForChild(game.Players.LocalPlayer.Name),
+                game:GetService("Players"):WaitForChild(v.Name).Character:WaitForChild("Humanoid"),
+                game:GetService("Players"):WaitForChild(v.Name).Character:WaitForChild("HumanoidRootPart"),
+                100,
+                {
+                    0,
+                    0,
+                    false,
+                    false,
+                    [7] = 100,
+                    [8] = 100
+                },
+                {
+                    false,
+                    0,
+                    3
+                },
+                game:GetService("Players"):WaitForChild(v.Name).Character:WaitForChild("Head"),
+                {
+                    false,
+                    {
+                        245630994,
+                        245631056,
+                        245631167
+                    },
+                    0,
+                    10,
+                    game:GetService("Players").LocalPlayer:WaitForChild("PlayerScripts"):WaitForChild("Main"):WaitForChild("Modules"):WaitForChild("GunScript_Local"):WaitForChild("HeadshotEffect")
+                },
+                Vector3.new(921.6404418945312, 2.7038402557373047, -43.47956848144531),
+                Vector3.new(0.6158695816993713, 0, -0.7878485918045044),
+                1763309140.779972,
+                Vector3.new(3.115004062652588, 2.373520612716675, 2.2970361709594727)
+                }
+                game:GetService("ReplicatedStorage"):WaitForChild("RemoteEvents"):WaitForChild("InflictTarget"):FireServer(unpack(args))
+            end
+        end
+    end
+})
+
+local CrashMethodsTab = Window:Tab({
+    Title = "Crash Methods",
+    Icon = "sparkles"
+})
+
+-- Lag Game Feature
+CrashMethodsTab:Button({
+    Title = "Lag Game",
+    Callback = function()
+        while task.wait() do
+            local remote = game.ReplicatedStorage.RemoteEvents:FindFirstChild("PlayAudio", true)
+            if remote then
+                for i, v in pairs(workspace:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        remote:FireServer("}0, { \n\n } ", "}, { ", {
+                            SoundId = "rbxassetid://77541988554107",
+                            Pitch = 1,
+                            Volume = 100,
+                            EmitterSize = 10000,
+                            Position = v.Position,
+                            Replicate = true,
+                            Effects = true
+                        })
+                    end
+                end
+            end
+        end
+    end
+})
+
+-- Crash Game Feature
+CrashMethodsTab:Button({
+    Title = "Crash Game",
+    Callback = function()
+        local folders = {
+            "Hats",
+            "Shirts", 
+            "Accessories",
+            "Pants",
+            "Hairs"
+        }
+
+        local remoteEvent = game:GetService("ReplicatedStorage"):WaitForChild("HatsChange")
+
+        while task.wait() do
+            for _, folderName in pairs(folders) do
+                local folder = game:GetService("ReplicatedStorage"):FindFirstChild(folderName)
+                if folder then
+                    for _, item in pairs(folder:GetChildren()) do
+                        local args = {item}
+                        remoteEvent:FireServer(unpack(args))
+                    end
+                end
+            end
+        end
+    end
+})
+
+-- BreakMap (regular) Feature
+CrashMethodsTab:Button({
+    Title = "BreakMap (regular)",
+    Callback = function()
+        for i, v in pairs(workspace:GetDescendants()) do
+            if v:IsA("BasePart") then
+                game.ReplicatedStorage:FindFirstChild("BreakGlass", true):FireServer(v)
+            end
+        end
+    end
+})
+
+-- BreakMap (secondary) Feature
+CrashMethodsTab:Button({
+    Title = "BreakMap (secondary)",
+    Callback = function()
+        for i, v in pairs(game.Workspace:GetDescendants()) do
+            if v:IsA("BasePart") then
+                game.ReplicatedStorage.RemoteEvents.Glass:FireServer(v)
+            end
+        end
+    end
+})
+
+local TeleportsTab = Window:Tab({
+    Title = "Teleports",
+    Icon = "sparkles"
+})
+
+-- Doa Roof (new sb war) Teleport
+TeleportsTab:Button({
+    Title = "Doa Roof (new sb war)",
+    Callback = function()
+        game.Players.LocalPlayer.Character:PivotTo(CFrame.new(Vector3.new(96.357605, 102.6994171, -500.121582, 1, 0, 0, 0, 1, 0, 0, 0, 1)))
+    end
+})
